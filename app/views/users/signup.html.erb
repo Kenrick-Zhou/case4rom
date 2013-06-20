@@ -1,0 +1,22 @@
+<fieldset>
+  <legend>Sign up</legend>
+  <%= error_messages_for :user %>
+
+  <% form_for(@user)  do |f| -%>
+
+      <p><label for="login">Email:</label><br/>
+        <%= f.text_field :username %> <br/>
+        <cite>Yu</cite>
+
+      <p><label for="password">Password:</label><br/>
+        <%= f.password_field :password %><br/>
+        <cite> Enter the password that is between 4 and 40 characters in length.</cite>
+
+      <p><label for="password_confirmation">Confirm Password:</label><br/>
+        <%= f.password_field :password_confirm %><br/>
+        <cite>Enter the same password as above.</cite>
+
+      <p><%= submit_tag 'Sign up' %></p>
+  <% end -%>
+
+</fieldset>
