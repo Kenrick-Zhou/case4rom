@@ -28,4 +28,11 @@ class User < ActiveRecord::Base
     save(false)
   end
 
+  def self.encrypt(password, salt)
+    Digest::SHA2.hexdigest(password + 'kkb' + salt)
+  end
+
+  def generate_salt
+    @salt = self.object_id.to_s + rand.to_s
+  end
 end

@@ -2,8 +2,6 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
 
-  def signup
-  end
   def index
     @users = User.all
 
@@ -96,5 +94,19 @@ class UsersController < ApplicationController
 
   def login
   end
+
+  def redirect
+    user =User.authenticate(params[:username], params[:password])
+    if user
+      session[:user_id] = user.id
+      redirect_to(:action => "index" )
+    else
+      flash.now[:notice] = 'Invalid user/password combination'
+    end
+  end
+
+  def signUp
+  end
+
 
 end

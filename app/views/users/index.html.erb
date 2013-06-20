@@ -1,27 +1,42 @@
-<h1>Listing users</h1>
+<!--<h1>Listing users</h1>-->
 
-<table>
-  <tr>
-    <th>Username</th>
-    <th>Password</th>
-    <th>Password confirm</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<!--<table>-->
+  <!--<tr>-->
+    <!--<th>Username</th>-->
+    <!--<th>Password</th>-->
+    <!--<th>Password confirm</th>-->
+    <!--<th></th>-->
+    <!--<th></th>-->
+    <!--<th></th>-->
+  <!--</tr>-->
 
-<% @users.each do |user| %>
-  <tr>
-    <td><%= user.username %></td>
-    <td><%= user.password %></td>
-    <td><%= user.password_confirm %></td>
-    <td><%= link_to 'Show', user %></td>
-    <td><%= link_to 'Edit', edit_user_path(user) %></td>
-    <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
+<!--<% @users.each do |user| %>-->
+  <!--<tr>-->
+    <!--<td><%= user.username %></td>-->
+    <!--<td><%= user.password %></td>-->
+    <!--<td><%= user.password_confirm %></td>-->
+    <!--<td><%= link_to 'Show', user %></td>-->
+    <!--<td><%= link_to 'Edit', edit_user_path(user) %></td>-->
+    <!--<td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
+  <!--</tr>-->
+<!--<% end %>-->
+<!--</table>-->
+
+<!--<br />-->
+
+<% if user_logged_in? %>
+    <span>You are logged in as: </span>
+    <%= current_user.login %>
+<% else %>
+    <span>Welcome Guest</span>
 <% end %>
-</table>
+<br>
 
-<br />
 
-<%= link_to 'New User', new_user_path %>
+<span >Navigation:</span>
+<% if user_logged_in? %>
+    <%= link_to 'Logout', :controller => 'sessions', :action => 'destroy_session'  %>
+<% else %>
+    <%= link_to "Sign up", users_signup_path  %>
+    | <%= link_to 'Login', users_login_path  %>
+<% end %>
