@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
   # GET /users
   # GET /users.json
+
+  def signup
+  end
   def index
     @users = User.all
 
