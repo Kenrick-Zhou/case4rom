@@ -37,6 +37,6 @@
 <% if user_logged_in? %>
     <%= link_to 'Logout', :controller => 'sessions', :action => 'destroy_session'  %>
 <% else %>
-    <%= link_to "Sign up", users_signup_path  %>
+    <%= link_to "Sign up", users_signUp_path  %>
     | <%= link_to 'Login', users_login_path  %>
 <% end %>
