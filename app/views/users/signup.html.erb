@@ -1,14 +1,14 @@
 
-<%= form_for :user,:action => 'create'  do |f| %>
+<%= form_tag  :action => 'create' do  %>
 
-        <%= f.label :username %>
-        <%= f.text_field :username %>   <br>
+    <label for="username">Email</label>
+    <%= text_field_tag :username, params[:username] %>       <br>
 
-        <%= f.label :password %>
-        <%= f.text_field :password %>    <br>
+    <label for="password">Password</label>
+    <%= password_field :password, params[:password] %>     <br>
 
-        <%= f.label :password_confirm %>
-        <%= f.text_field :password_confirm %>   <br>
+    <label for="password_confirm">Password</label>
+    <%= password_field :password_confirm, params[:password_confirm] %> <br>
 
-        <%= f.submit %>
-  <% end %>
+    <%= submit_tag '注册' %>
+<% end %>

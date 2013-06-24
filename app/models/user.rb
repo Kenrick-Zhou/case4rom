@@ -1,15 +1,8 @@
 class User < ActiveRecord::Base
   attr_accessible :password, :password_confirm, :username
   attr_accessor :password, :password_confirm, :username
-  validates :username, :presence => true,
-            :length => {:minimum => 3, :maximum => 30},
-            :uniqueness => true,
-            :format => {:with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i}
-  validates :password,  :presence => true,
-            :length => {:minimum => 4, :maximum => 15}
-  validates :password_confirm, :confirmation => true
-  validates :username, :uniqueness => true
 
+  validates :username, :presence => true
   def forget_me
     self.username = nil
     self.password            = nil
