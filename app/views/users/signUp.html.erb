@@ -1,15 +1,20 @@
-<%= form_tag  :action => 'create' do  %>
+<%= form_for @user, :url => {:controller => 'users', :action => 'create', } do |f| %>
 
-    <label for="username">Email</label>
-    <%= text_field_tag :username, params[:username] %>       <br>
+    <div>
+      <%= f.label :Email %>:
+      <%= f.text_field :username %>   <br>
+    </div>
+    <div>
+      <%= f.label :Password %>:
+      <%= f.text_field :password %>    <br>
+    </div>
+    <div>
+      <%= f.label :Password_confirm, 'Confirm' %>:
+      <%= f.text_field :password_confirm %> <br>
+    </div>
+    <div>
+      <%= f.submit '注册' %>
+    </div>
 
-    <label for="password">Password</label>
-    <%= password_field :password, params[:password] %>     <br>
-
-    <label for="password_confirm">Password</label>
-    <%= password_field :password_confirm, params[:password_confirm] %> <br>
-
-    <%= submit_tag '注册' %>
 <% end %>
-
 

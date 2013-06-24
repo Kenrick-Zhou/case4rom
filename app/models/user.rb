@@ -1,8 +1,8 @@
 class User < ActiveRecord::Base
-  attr_accessible :password, :password_confirm, :username
-  attr_accessor :password, :password_confirm, :username
+  attr_accessor :username
+  attr_accessible :username, :password, :password_confirm
 
-  validates :username, :presence => true
+  #validates :username, :presence => true
   def forget_me
     self.username = nil
     self.password            = nil

@@ -40,16 +40,39 @@ class UsersController < ApplicationController
 
   # POST /users
   # POST /users.json
+  #def create
+  #  @user = User.new(params[:user])
+  #  if @user.save
+  #    printf '--------------------'
+  #    redirect_to :action => :test
+  #  else
+  #    printf '+++++++++++++++++++++++'
+  #    redirect_to :action => :signUp
+  #  end
+  #end
+
   def create
     @user = User.new(params[:user])
-    if @user.save
-      printf '--------------------'
-      redirect_to :action => :test
-    else
-      printf '+++++++++++++++++++++++'
-      redirect_to :action => :signUp
+    printf "======================================================"
+    printf @user.username
+    printf @user.password
+    printf "======================================================"
+    respond_to do |format|
+      if @user.save
+        printf '--------------------'
+        flash[:notice] = "User #{@user.username} was successfully created."
+        format.html { redirect_to :action => :test, :notice => "User #{@user.username} was successfully created." }
+        format.json { render :json => @user, :status => :created, :location => @user }
+      else
+        printf '+++++++++++++++++++++++'
+        format.html { redirect_to :action => :signUp, :notice => "User #{@user.username} was not created." }
+        format.json { render :xml => @user.errors, :status => :unprocessable_entity }
+      end
     end
   end
+
+
+
   # PUT /users/1
   # PUT /users/1.json
   def update
@@ -102,7 +125,7 @@ class UsersController < ApplicationController
   end
 
   def signUp
-
+    @user = User.new
   end
 
   def test
