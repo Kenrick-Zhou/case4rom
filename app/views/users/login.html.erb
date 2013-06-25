@@ -1,19 +1,8 @@
-<<<<<<< HEAD
-<%= form_tag :action => 'redirect' do  %>
 
-
-      <label for="username">Email</label>
-      <%= text_field_tag :username, params[:username] %>
-      <label for="password">Password</label>
-      <%= password_field :password, params[:password] %>
-=======
 <%= form_tag @user, :action => 'redirect' do %>
->>>>>>> b08dd9d062820f12e1d9ece87249511832448fc6
-
     <label for="username">邮箱:</label>
     <%= text_field_tag :username, params[:username] %>
     <br>
-
     <label for="password">密码:</label>
     <%= password_field :password, params[:password] %>
 
