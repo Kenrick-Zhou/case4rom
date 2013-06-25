@@ -66,7 +66,7 @@ class UsersController < ApplicationController
         end
 
       else
-        format.html { redirect_to :action => :signUp, :notice =>' password is not correct,User was not created.' }
+        format.html { redirect_to :action => :signUp, :notice => ' password is not correct,User was not created.' }
         format.json { render json: @user.errors, :status => :unprocessable_entity }
       end
     end
@@ -119,7 +119,7 @@ class UsersController < ApplicationController
     @user = User.find_by_username(params[:username])
 
     respond_to do |format|
-      if @user and  '["'<< @user.password<< '"]'.to_s == params[:password] .to_s
+      if @user and '["'<< @user.password<< '"]'.to_s == params[:password].to_s
 
         flash[:notice] = "User #{@user.username} was successfully login."
         format.html { redirect_to :action => :test, :notice => "User #{@user.username} was successfully login." }
