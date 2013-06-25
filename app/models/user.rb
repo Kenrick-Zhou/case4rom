@@ -1,5 +1,6 @@
+require 'digest/sha2'
+
 class User < ActiveRecord::Base
-  require 'digest/sha2'
   attr_accessible :username, :password, :password_confirm
 
   validates_presence_of :username, :password, :password_confirm
@@ -11,7 +12,7 @@ class User < ActiveRecord::Base
 
   def forget_me
     self.username = nil
-    self.password            = nil
+    self.password = nil
     save(false)
   end
 
