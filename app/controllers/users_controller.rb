@@ -53,20 +53,21 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
-    printf "======================================================"
-    printf @user.username
-    printf @user.password
-    printf "======================================================"
     respond_to do |format|
-      if @user.save
-        printf '--------------------'
-        flash[:notice] = "User #{@user.username} was successfully created."
-        format.html { redirect_to :action => :test, :notice => "User #{@user.username} was successfully created." }
-        format.json { render :json => @user, :status => :created, :location => @user }
+      if @user.password == @user.password_confirm
+
+        if @user.save
+          flash[:notice] = "User #{@user.username} was successfully created."
+          format.html { redirect_to :action => :test, :notice => "User #{@user.username} was successfully created." }
+          format.json { render :json => @user, :status => :created, :location => @user }
+        else
+          format.html { redirect_to :action => :signUp, :notice => "User #{@user.username} was not created." }
+          format.json { render json: @user.errors, :status => :unprocessable_entity }
+        end
+
       else
-        printf '+++++++++++++++++++++++'
-        format.html { redirect_to :action => :signUp, :notice => "User #{@user.username} was not created." }
-        format.json { render :xml => @user.errors, :status => :unprocessable_entity }
+        format.html { redirect_to @user, :notice =>' password is not correct,User was not created.' }
+        format.json { render json: @user.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -116,7 +117,7 @@ class UsersController < ApplicationController
 
   def redirect
     user = User.find_by_username(params[:username])
-    if user and User.find_by_password(params[:password])
+    if user.password == params[:password]
       printf '==================================='
       redirect_to :action => :test
     else

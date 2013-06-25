@@ -1,19 +1,33 @@
 <%= form_for @user, :url => {:controller => 'users', :action => 'create', } do |f| %>
 
+
+    <% if @user.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+          <ul>
+            <% @user.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+
     <div>
       <%= f.label :Email %>:
       <%= f.text_field :username %>   <br>
     </div>
     <div>
       <%= f.label :Password %>:
-      <%= f.text_field :password %>    <br>
+      <%= f.password_field :password %>    <br>
     </div>
     <div>
       <%= f.label :Password_confirm, 'Confirm' %>:
-      <%= f.text_field :password_confirm %> <br>
+      <%= f.password_field :password_confirm %> <br>
     </div>
-    <div>
-      <%= f.submit '注册' %>
+    <div class="actions">
+      <%= f.submit '註冊'%>
     </div>
 
 <% end %>
