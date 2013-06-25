@@ -1,8 +1,11 @@
 
 <%= form_tag @user, :action => 'redirect' do %>
+
+
     <label for="username">邮箱:</label>
     <%= text_field_tag :username, params[:username] %>
     <br>
+
     <label for="password">密码:</label>
     <%= password_field :password, params[:password] %>
 

@@ -1,10 +1,10 @@
 <%= form_for @user, :url => {:controller => 'users', :action => 'create', } do |f| %>
 
-    <!--<% if @user.errors.full_messages.any? %>-->
-        <!--<% @user.errors.full_messages.each do |error_message| %>-->
+    <% if @user.errors.full_messages.any? %>
+        <% @user.errors.full_messages.each do |error_message| %>
             <%= error_message if @user.errors.full_messages.first == error_message %> <br />
-        <!--<% end %>-->
-    <!--<% end %>-->
+        <% end %>
+    <% end %>
 
 
     <div>

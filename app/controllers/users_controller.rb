@@ -117,7 +117,6 @@ class UsersController < ApplicationController
 
   def redirect
     @user = User.find_by_username(params[:username])
-
     respond_to do |format|
       if @user and  '["'<< @user.password<< '"]'.to_s == params[:password] .to_s
 
