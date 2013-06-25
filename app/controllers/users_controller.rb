@@ -73,7 +73,6 @@ class UsersController < ApplicationController
   end
 
 
-
   # PUT /users/1
   # PUT /users/1.json
   def update
@@ -117,12 +116,20 @@ class UsersController < ApplicationController
   end
 
   def redirect
-    user = User.find_by_username(params[:username])
-    if user and  '["'<< user.password<< '"]'.to_s == params[:password] .to_s
-      redirect_to :action => :test
-    else
-      redirect_to :action => :signUp
+    @user = User.find_by_username(params[:username])
+
+    respond_to do |format|
+      if @user and  '["'<< @user.password<< '"]'.to_s == params[:password] .to_s
+
+        flash[:notice] = "User #{@user.username} was successfully login."
+        format.html { redirect_to :action => :test, :notice => "User #{@user.username} was successfully login." }
+        format.json { render :json => @user, :status => OK, :location => @user }
+      else
+        format.html { redirect_to :action => :signUp, :notice => 'User was not login.' }
+        format.json { render json: @user.errors, :status => :unprocessable_entity }
+      end
     end
+
   end
 
   def signUp

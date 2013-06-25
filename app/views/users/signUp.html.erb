@@ -1,17 +1,10 @@
 <%= form_for @user, :url => {:controller => 'users', :action => 'create', } do |f| %>
 
-
-    <% if @user.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-          <ul>
-            <% @user.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-            <% end %>
-          </ul>
-        </div>
-    <% end %>
+    <!--<% if @user.errors.full_messages.any? %>-->
+        <!--<% @user.errors.full_messages.each do |error_message| %>-->
+            <%= error_message if @user.errors.full_messages.first == error_message %> <br />
+        <!--<% end %>-->
+    <!--<% end %>-->
 
 
     <div>
@@ -26,8 +19,9 @@
       <%= f.label :Password_confirm, 'Confirm' %>:
       <%= f.password_field :password_confirm %> <br>
     </div>
+
     <div class="actions">
-      <%= f.submit '註冊'%>
+      <%= f.submit '注册' %>
     </div>
 
 <% end %>
