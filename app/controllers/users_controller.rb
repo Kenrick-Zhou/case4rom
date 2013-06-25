@@ -58,15 +58,15 @@ class UsersController < ApplicationController
 
         if @user.save
           flash[:notice] = "User #{@user.username} was successfully created."
-          format.html { redirect_to :action => :test, :notice => "User #{@user.username} was successfully created." }
+          format.html { redirect_to :action => :test, :notice => "User was successfully created." }
           format.json { render :json => @user, :status => :created, :location => @user }
         else
-          format.html { redirect_to :action => :signUp, :notice => "User #{@user.username} was not created." }
+          format.html { redirect_to :action => :signUp, :notice => "User was not created." }
           format.json { render json: @user.errors, :status => :unprocessable_entity }
         end
 
       else
-        format.html { redirect_to @user, :notice =>' password is not correct,User was not created.' }
+        format.html { redirect_to :action => :signUp, :notice =>' password is not correct,User was not created.' }
         format.json { render json: @user.errors, :status => :unprocessable_entity }
       end
     end
@@ -113,12 +113,12 @@ class UsersController < ApplicationController
   end
 
   def login
+
   end
 
   def redirect
     user = User.find_by_username(params[:username])
-    if user.password == params[:password]
-      printf '==================================='
+    if user and  '["'<< user.password<< '"]'.to_s == params[:password] .to_s
       redirect_to :action => :test
     else
       redirect_to :action => :signUp
