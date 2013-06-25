@@ -1,6 +1,5 @@
 
-<%= form_tag @user, :action => 'redirect' do %>
-
+<%= form_tag :action => 'redirect' do %>
 
     <label for="username">邮箱:</label>
     <%= text_field_tag :username, params[:username] %>
