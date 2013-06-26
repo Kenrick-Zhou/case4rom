@@ -78,15 +78,21 @@ class UsersController < ApplicationController
   # PUT /users/1
   # PUT /users/1.json
   def update
-    @user = User.find_by_username(params[:username])
+    @user = User.find_by_username(User.new(params[:user]).username)
 
     respond_to do |format|
-      if @user.update_attributes(params[:user])
-        format.html { redirect_to :action => :test, notice: 'User was successfully updated.' }
-        format.json { head :no_content }
+      if @user
+        if @user.update_attributes(params[:user])
+          format.html { redirect_to :action => :test, notice: 'User was successfully updated.' }
+          format.json { head :no_content }
+        else
+          flash[:notice] = 'User was not successfully updated'
+          format.html { render :action => :forgot_password, :notice => 'User was not successfully updated' }
+        end
+
       else
-        format.html { render action: 'edit' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        flash[:notice] = 'username could not found, please signUp'
+        format.html { render :action => :forgot_password, :notice => 'username could not found.' }
       end
     end
   end
@@ -105,10 +111,11 @@ class UsersController < ApplicationController
 
   def forgot_password
 
-    #@user = User.new
-    #
+    @user = User.new
+
+
     #@user = User.find_by_username(params[:username])
-    #
+
     #respond_to do |format|
     #  if @user
     #         update(@user.id)
@@ -120,7 +127,7 @@ class UsersController < ApplicationController
     #  end
     #end
     #self.make_password_reset_code
-
+    #
     #redirect_to users_forgot_password_path
   end
 
