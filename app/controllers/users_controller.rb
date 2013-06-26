@@ -92,7 +92,7 @@ class UsersController < ApplicationController
 
       else
         flash[:notice] = 'username could not found, please signUp'
-        format.html { render :action => :forgot_password, :notice => 'username could not found.' }
+        format.html { redirect_to :action => :forgot_password, :notice => 'username could not found.' }
       end
     end
   end
@@ -158,11 +158,16 @@ class UsersController < ApplicationController
   end
 
   def signUp
+    #redirect_to :action => :test
     @user = User.new
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @user }
     end
+  end
+
+  def agreement
+    redirect_to :action => :agreement
   end
 
   def test
