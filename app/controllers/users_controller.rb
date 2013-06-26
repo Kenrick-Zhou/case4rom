@@ -54,21 +54,23 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     respond_to do |format|
-      if @user.password == @user.password_confirm
-
-        if @user.save
-          flash[:notice] = "User #{@user.username} was successfully created."
-          format.html { redirect_to :action => :test, :notice => "User was successfully created." }
-          format.json { render :json => @user, :status => :created, :location => @user }
+        if @user.password == ''
+          flash[:notice] =   'The Password is blank'
+          format.html { render :action => :signUp }
         else
-          format.html { redirect_to :action => :signUp, :notice => "User was not created." }
-          format.json { render json: @user.errors, :status => :unprocessable_entity }
+          if @user.password == @user.password_confirm
+            if @user.save
+              format.html { redirect_to :action => :test, :notice => "User was successfully created." }
+              format.json { render :json => @user, :status => :created, :location => @user }
+            else
+              flash[:notice] =   'The Email is not correct'
+              format.html { render :action => :signUp }
+            end
+          else
+            flash[:notice] =   'The Password is not same'
+            format.html { render :action => :signUp }
+          end
         end
-
-      else
-        format.html { redirect_to :action => :signUp, :notice => ' password is not correct,User was not created.' }
-        format.json { render json: @user.errors, :status => :unprocessable_entity }
-      end
     end
   end
 
@@ -117,6 +119,7 @@ class UsersController < ApplicationController
 
   def redirect
     @user = User.find_by_username(params[:username])
+    session[:id]
     respond_to do |format|
       if @user and '["'<< @user.password<< '"]'.to_s == params[:password].to_s
 
@@ -133,6 +136,10 @@ class UsersController < ApplicationController
 
   def signUp
     @user = User.new
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @user }
+    end
   end
 
   def test

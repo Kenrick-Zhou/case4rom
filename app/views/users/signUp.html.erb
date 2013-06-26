@@ -1,10 +1,20 @@
 <%= form_for @user, :url => {:controller => 'users', :action => 'create', } do |f| %>
 
-    <% if @user.errors.full_messages.any? %>
-        <% @user.errors.full_messages.each do |error_message| %>
-            <%= error_message if @user.errors.full_messages.first == error_message %> <br />
-        <% end %>
+    <% if @user.errors.any? %>
+        <div id="error_explanation">
+          <ul>
+            <% @user.errors.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
     <% end %>
+    <fieldset>
+      <legend>Enter User Details</legend>
+
+      <% if flash[:notice] %>
+          <div class="notice"><%= flash[:notice] %></div>
+      <% end %>
 
     <div>
       <%= f.label :Email %>:
@@ -22,6 +32,7 @@
     <div class="actions">
       <%= f.submit '注册' %>
     </div>
-
+    </fieldset>
 <% end %>
+
 
