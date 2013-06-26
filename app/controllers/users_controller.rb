@@ -50,18 +50,18 @@ class UsersController < ApplicationController
   #    redirect_to :action => :signUp
   #  end
   #end
-
   def create
     @user = User.new(params[:user])
     respond_to do |format|
       if @user.password == @user.password_confirm
 
         if @user.save
+
           flash[:notice] = "User #{@user.username} was successfully created."
-          format.html { redirect_to :action => :test, :notice => "User was successfully created." }
+          format.html { redirect_to :action => :test, :notice => 'User was successfully created.' }
           format.json { render :json => @user, :status => :created, :location => @user }
         else
-          format.html { redirect_to :action => :signUp, :notice => "User was not created." }
+          format.html { redirect_to :action => :signUp, :notice => 'User was not created.' }
           format.json { render json: @user.errors, :status => :unprocessable_entity }
         end
 
@@ -83,7 +83,7 @@ class UsersController < ApplicationController
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -103,7 +103,28 @@ class UsersController < ApplicationController
 
   def forgot_password
     @forgotten_password = true
-    self.make_password_reset_code
+    @user = User.find_by_username(params[:username])
+
+    respond_to do |format|
+      if @user and @user.password == @user.password_confirm
+        if @user.update_attributes(params[:user])
+
+          flash[:notice] = "Password #{@user.username} was successfully created."
+          format.html { redirect_to :action => :test, :notice => 'Password was successfully created.' }
+          format.json { render :json => @user, :status => :created, :location => @user }
+        else
+          format.html { redirect_to :action => :signUp, :notice => 'Password was not created.' }
+          format.json { render json: @user.errors, :status => :unprocessable_entity }
+        end
+
+      else
+        format.html { redirect_to :action => :signUp, :notice => 'User was not login.' }
+        format.json { render json: @user.errors, :status => :unprocessable_entity }
+      end
+    end
+    #self.make_password_reset_code
+
+    #redirect_to users_forgot_password_path
   end
 
   def make_password_reset_code
@@ -128,7 +149,6 @@ class UsersController < ApplicationController
         format.json { render json: @user.errors, :status => :unprocessable_entity }
       end
     end
-
   end
 
   def signUp
