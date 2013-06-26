@@ -1,4 +1,4 @@
-<%= form_for @user, :url => {:controller => 'users', :action => 'create', } do |f| %>
+<%= form_for @user, :url => {:controller => 'users', :action => 'create', :method => :post} do |f| %>
 
     <% if @user.errors.any? %>
         <div id="error_explanation">
@@ -16,18 +16,18 @@
 
     <fieldset>
 
-      <legend>Enter User Details</legend>
+      <legend>填写注册信息</legend>
 
       <div>
-        <%= f.label :Email %>:
+        <%= f.label :Email, '邮箱' %>:
         <%= f.text_field :username %>   <br>
       </div>
       <div>
-        <%= f.label :Password %>:
+        <%= f.label :Password, '密码' %>:
         <%= f.password_field :password %>    <br>
       </div>
       <div>
-        <%= f.label :Password_confirm, 'Confirm' %>:
+        <%= f.label :Password_confirm, '确认密码' %>:
         <%= f.password_field :password_confirm %> <br>
       </div>
 

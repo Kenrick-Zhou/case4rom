@@ -1,25 +1,27 @@
 <!--<h1>Listing users</h1>-->
 
 <!--<table>-->
-  <!--<tr>-->
-    <!--<th>Username</th>-->
-    <!--<th>Password</th>-->
-    <!--<th>Password confirm</th>-->
-    <!--<th></th>-->
-    <!--<th></th>-->
-    <!--<th></th>-->
-  <!--</tr>-->
+<!--<tr>-->
+<!--<th>Username</th>-->
+<!--<th>Password</th>-->
+<!--<th>Password confirm</th>-->
+<!--<th></th>-->
+<!--<th></th>-->
+<!--<th></th>-->
+<!--</tr>-->
 
-<!--<% @users.each do |user| %>-->
-  <!--<tr>-->
+<!--
+<% @users.each do |user| %>-->
+    <!--<tr>-->
     <!--<td><%= user.username %></td>-->
     <!--<td><%= user.password %></td>-->
     <!--<td><%= user.password_confirm %></td>-->
     <!--<td><%= link_to 'Show', user %></td>-->
     <!--<td><%= link_to 'Edit', edit_user_path(user) %></td>-->
-    <!--<td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
-  <!--</tr>-->
-<!--<% end %>-->
+    <!--<td><%= link_to 'Destroy', user, method: :delete, data: {confirm: 'Are you sure?'} %></td>-->
+    <!--</tr>-->
+    <!--
+<% end %>-->
 <!--</table>-->
 
 <!--<br />-->
@@ -33,10 +35,10 @@
 <br>
 
 
-<span >Navigation:</span>
+<span>Navigation:</span>
 <% if user_logged_in? %>
-    <%= link_to 'Logout', :controller => 'sessions', :action => 'destroy_session'  %>
+    <%= link_to 'Logout', :controller => 'sessions', :action => 'destroy_session' %>
 <% else %>
-    <%= link_to "Sign up", users_signUp_path  %>
-    | <%= link_to 'Login', users_login_path  %>
+    <%= link_to '注册', :controller => 'users', :action => 'signUp' %>
+    <%= link_to '登陆', :controller => 'users', :action => 'login' %>
 <% end %>
