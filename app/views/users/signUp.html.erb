@@ -1,27 +1,40 @@
 <%= form_for @user, :url => {:controller => 'users', :action => 'create', } do |f| %>
 
-    <% if @user.errors.full_messages.any? %>
-        <% @user.errors.full_messages.each do |error_message| %>
-            <%= error_message if @user.errors.full_messages.first == error_message %> <br />
-        <% end %>
+    <% if @user.errors.any? %>
+        <div id="error_explanation">
+          <ul>
+            <% @user.errors.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
     <% end %>
 
-    <div>
-      <%= f.label :Email %>:
-      <%= f.text_field :username %>   <br>
-    </div>
-    <div>
-      <%= f.label :Password %>:
-      <%= f.password_field :password %>    <br>
-    </div>
-    <div>
-      <%= f.label :Password_confirm, 'Confirm' %>:
-      <%= f.password_field :password_confirm %> <br>
-    </div>
+    <% if flash[:notice] %>
+        <div class="notice"><%= flash[:notice] %></div>
+    <% end %>
 
-    <div class="actions">
-      <%= f.submit '注册' %>
-    </div>
+    <fieldset>
 
+      <legend>Enter User Details</legend>
+
+      <div>
+        <%= f.label :Email %>:
+        <%= f.text_field :username %>   <br>
+      </div>
+      <div>
+        <%= f.label :Password %>:
+        <%= f.password_field :password %>    <br>
+      </div>
+      <div>
+        <%= f.label :Password_confirm, 'Confirm' %>:
+        <%= f.password_field :password_confirm %> <br>
+      </div>
+
+      <div class="actions">
+        <%= f.submit '注册' %>
+      </div>
+    </fieldset>
 <% end %>
+
 

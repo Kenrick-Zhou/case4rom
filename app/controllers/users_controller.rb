@@ -53,21 +53,23 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     respond_to do |format|
-      if @user.password == @user.password_confirm
 
-        if @user.save
-
-          flash[:notice] = "User #{@user.username} was successfully created."
-          format.html { redirect_to :action => :test, :notice => 'User was successfully created.' }
-          format.json { render :json => @user, :status => :created, :location => @user }
-        else
-          format.html { redirect_to :action => :signUp, :notice => 'User was not created.' }
-          format.json { render json: @user.errors, :status => :unprocessable_entity }
-        end
-
+      if @user.password == ''
+        flash[:notice] = 'The Password is blank'
+        format.html { render :action => :signUp }
       else
-        format.html { redirect_to :action => :signUp, :notice => ' password is not correct,User was not created.' }
-        format.json { render json: @user.errors, :status => :unprocessable_entity }
+        if @user.password == @user.password_confirm
+          if @user.save
+            format.html { redirect_to :action => :test, :notice => 'User was successfully created.' }
+            format.json { render :json => @user, :status => :created, :location => @user }
+          else
+            flash[:notice] = 'The Email is not correct'
+            format.html { render :action => :signUp }
+          end
+        else
+          flash[:notice] = 'The Password is not same'
+          format.html { render :action => :signUp }
+        end
       end
     end
   end
@@ -76,11 +78,11 @@ class UsersController < ApplicationController
   # PUT /users/1
   # PUT /users/1.json
   def update
-    @user = User.find(params[:id])
+    @user = User.find_by_username(params[:username])
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to :action => :test, notice: 'User was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -102,26 +104,21 @@ class UsersController < ApplicationController
   end
 
   def forgot_password
-    @forgotten_password = true
-    @user = User.find_by_username(params[:username])
 
-    respond_to do |format|
-      if @user and @user.password == @user.password_confirm
-        if @user.update_attributes(params[:user])
-
-          flash[:notice] = "Password #{@user.username} was successfully created."
-          format.html { redirect_to :action => :test, :notice => 'Password was successfully created.' }
-          format.json { render :json => @user, :status => :created, :location => @user }
-        else
-          format.html { redirect_to :action => :signUp, :notice => 'Password was not created.' }
-          format.json { render json: @user.errors, :status => :unprocessable_entity }
-        end
-
-      else
-        format.html { redirect_to :action => :signUp, :notice => 'User was not login.' }
-        format.json { render json: @user.errors, :status => :unprocessable_entity }
-      end
-    end
+    #@user = User.new
+    #
+    #@user = User.find_by_username(params[:username])
+    #
+    #respond_to do |format|
+    #  if @user
+    #         update(@user.id)
+    #
+    #  else
+    #    flash[:notice] = 'username is not found'
+    #    format.html { render :action => :forgot_password, :notice => 'username is not found.' }
+    #    format.json { render json: @user.errors, :status => :unprocessable_entity }
+    #  end
+    #end
     #self.make_password_reset_code
 
     #redirect_to users_forgot_password_path
@@ -138,6 +135,7 @@ class UsersController < ApplicationController
 
   def redirect
     @user = User.find_by_username(params[:username])
+    session[:id]
     respond_to do |format|
       if @user and '["'<< @user.password<< '"]'.to_s == params[:password].to_s
 
@@ -145,7 +143,8 @@ class UsersController < ApplicationController
         format.html { redirect_to :action => :test, :notice => "User #{@user.username} was successfully login." }
         format.json { render :json => @user, :status => OK, :location => @user }
       else
-        format.html { redirect_to :action => :signUp, :notice => 'User was not login.' }
+        flash[:notice] = 'username or password is not correct'
+        format.html { render :action => :login, :notice => 'User was not login.' }
         format.json { render json: @user.errors, :status => :unprocessable_entity }
       end
     end
@@ -153,6 +152,10 @@ class UsersController < ApplicationController
 
   def signUp
     @user = User.new
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @user }
+    end
   end
 
   def test
