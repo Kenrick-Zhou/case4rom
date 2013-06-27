@@ -163,7 +163,6 @@ class UsersController < ApplicationController
   end
 
   def agreement
-    redirect_to :action => :agreement
   end
 
   def test
