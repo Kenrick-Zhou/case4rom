@@ -161,8 +161,12 @@ class UsersController < ApplicationController
   end
 
   def signUp
-    @user = User.new
-
+    if  params[:agreement] == '1'
+      @user = User.new
+    else
+      flash[:notice] = 'accept the agreement'
+      render :action => :agreement
+    end
   end
 
   def agreement

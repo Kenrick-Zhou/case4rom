@@ -1,3 +1,9 @@
+<% if flash[:notice] %>
+    <div class="notice">
+      <li><%= flash[:notice] %></li>
+    </div>
+<% end %>
+
 <legend>协议</legend>
 <p>Enter your email address that we have on our file and click send. We will send you a
   password reset link email to your email address.
@@ -25,15 +31,10 @@
   password reset link email to your email address.
 </p>
 
+
 <%= form_tag :action => 'signUp' do %>
 
-    <% if flash[:notice] %>
-        <div class="notice"><%= flash[:notice] %></div>
-    <% end %>
-
-
-    <%= check_box_tag 'eula', 'accepted', false, disabled: false %><label for="remember_me">同意</label>
-
+    <%= check_box_tag 'agreement' %><label for="agreement">同意</label>
 
     <%= submit_tag '注册' %>
 
