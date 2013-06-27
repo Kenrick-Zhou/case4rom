@@ -32,10 +32,9 @@
     <% end %>
 
 
-    <%= check_box_tag 'remember_me' %><label for="remember_me">同意</label>
+    <%= check_box_tag 'eula', 'accepted', false, disabled: false %><label for="remember_me">同意</label>
 
 
-
-    <%= submit_tag '登陆' %>
+    <%= submit_tag '注册' %>
 
 <% end %>

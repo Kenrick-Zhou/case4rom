@@ -143,8 +143,11 @@ class UsersController < ApplicationController
   def redirect
     @user = User.find_by_username(params[:username])
     session[:id]
+
     respond_to do |format|
       if @user and '["'<< @user.password<< '"]'.to_s == params[:password].to_s
+
+        $uid = @user.id  #保存登陆的信息uid
 
         flash[:notice] = "User #{@user.username} was successfully login."
         format.html { redirect_to :action => :test, :notice => "User #{@user.username} was successfully login." }
