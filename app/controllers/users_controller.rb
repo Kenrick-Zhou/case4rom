@@ -158,8 +158,11 @@ class UsersController < ApplicationController
   end
 
   def signUp
-    @user = User.new
-
+    if  params[:agreement] == "1"
+      @user = User.new
+    else
+      render :action => :agreement
+    end
   end
 
   def agreement
