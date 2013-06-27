@@ -142,7 +142,7 @@ class UsersController < ApplicationController
 
   def redirect
     @user = User.find_by_username(params[:username])
-    session[:id]
+    #session[:id]
 
     respond_to do |format|
       if @user and '["'<< @user.password<< '"]'.to_s == params[:password].to_s
@@ -154,7 +154,7 @@ class UsersController < ApplicationController
         format.json { render :json => @user, :status => OK, :location => @user }
       else
         flash[:notice] = 'username or password is not correct'
-        format.html { render :action => :login, :notice => 'User was not login.' }
+        format.html { redirect_to :action => :login, :notice => 'User was not login.' }
         format.json { render json: @user.errors, :status => :unprocessable_entity }
       end
     end
