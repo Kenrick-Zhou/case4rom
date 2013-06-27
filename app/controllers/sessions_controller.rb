@@ -16,10 +16,10 @@ class SessionsController < ApplicationController
   end
 
   def destroy_session
-    self.current_user.forget_me if logged_in?
-    cookies.delete :authenticate
-    reset_session
+    if session[:user_id] != nil
+       session[:user_id] = nil
     flash[:notice] = 'You have been logged out.'
-    redirect_back_or_default('/')
+    redirect_to :controller => 'users', :action => 'login'
+    end
   end
 end

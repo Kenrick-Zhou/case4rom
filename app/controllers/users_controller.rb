@@ -61,6 +61,7 @@ class UsersController < ApplicationController
       else
         if @user.password == @user.password_confirm
           if @user.save
+            session[:user_id] = @user.id
             format.html { redirect_to :action => :test, :notice => 'User was successfully created.' }
             format.json { render :json => @user, :status => :created, :location => @user }
           else
@@ -142,20 +143,22 @@ class UsersController < ApplicationController
 
   def redirect
     @user = User.find_by_username(params[:username])
-    #session[:id]
+    if @user and session[:user_id] == @user.id
+      redirect_to :action => :test
+    else
+      respond_to do |format|
+        if @user and '["'<< @user.password<< '"]'.to_s == params[:password].to_s
 
-    respond_to do |format|
-      if @user and '["'<< @user.password<< '"]'.to_s == params[:password].to_s
+          $uid = @user.id  #保存登陆的信息uid
 
-        $uid = @user.id  #保存登陆的信息uid
-
-        flash[:notice] = "User #{@user.username} was successfully login."
-        format.html { redirect_to :action => :test, :notice => "User #{@user.username} was successfully login." }
-        format.json { render :json => @user, :status => OK, :location => @user }
-      else
-        flash[:notice] = 'username or password is not correct'
-        format.html { redirect_to :action => :login, :notice => 'User was not login.' }
-        format.json { render json: @user.errors, :status => :unprocessable_entity }
+          flash[:notice] = "User #{@user.username} was successfully login."
+          format.html { redirect_to :action => :test, :notice => "User #{@user.username} was successfully login." }
+          format.json { render :json => @user, :status => OK, :location => @user }
+        else
+          flash[:notice] = 'username or password is not correct'
+          format.html { redirect_to :action => :login, :notice => 'User was not login.' }
+          format.json { render json: @user.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end

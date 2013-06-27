@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   def forget_me
     self.username = nil
     self.password = nil
-    save(false)
+    session[:user_id] = nil
   end
 
   def remember_me
