@@ -51,6 +51,7 @@ class UsersController < ApplicationController
   #  end
   #end
   def create
+
     @user = User.new(params[:user])
     respond_to do |format|
 
@@ -87,11 +88,11 @@ class UsersController < ApplicationController
           format.json { head :no_content }
         else
           flash[:notice] = 'User was not successfully updated'
-          format.html { render :action => :forgot_password, :notice => 'User was not successfully updated' }
+          format.html { redirect_to :action => :forgot_password, :notice => 'User was not successfully updated' }
         end
 
       else
-        flash[:notice] = 'username could not found, please signUp'
+        flash[:notice] = 'username could not found'
         format.html { redirect_to :action => :forgot_password, :notice => 'username could not found.' }
       end
     end
@@ -112,7 +113,6 @@ class UsersController < ApplicationController
   def forgot_password
 
     @user = User.new
-
 
     #@user = User.find_by_username(params[:username])
 
@@ -158,12 +158,8 @@ class UsersController < ApplicationController
   end
 
   def signUp
-    #redirect_to :action => :test
     @user = User.new
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @user }
-    end
+
   end
 
   def agreement
