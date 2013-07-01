@@ -80,7 +80,7 @@ class UsersController < ApplicationController
   # PUT /users/1
   # PUT /users/1.json
   def update
-    @user = User.find_by_username(User.new(params[:user]).username)
+    @user = User.find_by_email(User.new(params[:user]).email)
 
     respond_to do |format|
       if @user
@@ -142,7 +142,7 @@ class UsersController < ApplicationController
   end
 
   def redirect
-    @user = User.find_by_username(params[:username])
+    @user = User.find_all_by_email(params[:email])
     if @user and session[:user_id] == @user.id
       redirect_to :action => :test
     else
@@ -155,7 +155,7 @@ class UsersController < ApplicationController
           format.html { redirect_to :action => :test, :notice => "User #{@user.username} was successfully login." }
           format.json { render :json => @user, :status => OK, :location => @user }
         else
-          flash[:notice] = 'username or password is not correct'
+          flash[:notice] = 'email or password is not correct'
           format.html { redirect_to :action => :login, :notice => 'User was not login.' }
           format.json { render json: @user.errors, :status => :unprocessable_entity }
         end

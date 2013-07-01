@@ -1,14 +1,14 @@
 require 'digest/sha2'
 
 class User < ActiveRecord::Base
-  attr_accessible :username, :password, :password_confirm
+  attr_accessible :username, :email, :password, :password_confirm
 
-  validates_presence_of :username, :password, :password_confirm
-  validates_format_of :username, :with => /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i
+  validates_presence_of :username, :password, :password_confirm, :email
+  validates_format_of :email, :with => /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i
   validates_length_of :password, :in => 6..20 # 介於 6~20
   validates_length_of :password_confirm, :in => 6..20 # 介於 6~20
   validates_length_of :username, :in => 6..20 # 介於 6~20
-  validates_uniqueness_of :username
+  validates_uniqueness_of :email
 
 
   def forget_me

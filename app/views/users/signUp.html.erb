@@ -20,8 +20,14 @@
 
       <div>
         <%= f.label :Email, '邮箱' %>:
+        <%= f.text_field :email %>   <br>
+      </div>
+
+      <div>
+        <%= f.label :UserName, '用户名' %>:
         <%= f.text_field :username %>   <br>
       </div>
+
       <div>
         <%= f.label :Password, '密码' %>:
         <%= f.password_field :password %>  <br>
