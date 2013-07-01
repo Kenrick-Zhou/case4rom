@@ -93,7 +93,7 @@ class UsersController < ApplicationController
         end
 
       else
-        flash[:notice] = 'username could not found'
+        flash[:notice] = 'email could not found'
         format.html { redirect_to :action => :forgot_password, :notice => 'username could not found.' }
       end
     end

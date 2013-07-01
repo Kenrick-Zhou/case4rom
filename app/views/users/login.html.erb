@@ -6,15 +6,14 @@
 
 
     <label for="username">邮箱:</label>
-    <%= text_field_tag :username, params[:username] %>
+    <%= text_field_tag :username, params[:username], placeholder: '请输入您的邮箱', size: 45, maxlength: 20 %>
     <br>
 
     <label for="password">密码:</label>
-    <%= password_field :password, params[:password] %>
+    <%= password_field :password, params[:password], placeholder: '请输入您的密码', size: 45, maxlength: 20 %>
     <br>
 
     <%= check_box_tag 'remember_me' %><label for="remember_me">记住我</label>
-
     <%= link_to '忘记密码', :controller => 'users', :action => 'forgot_password' %>
     <br>
 
