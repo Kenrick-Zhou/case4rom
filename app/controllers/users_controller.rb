@@ -142,7 +142,7 @@ class UsersController < ApplicationController
   end
 
   def redirect
-    @user = User.find_all_by_email(params[:email])
+    @user = User.find_by_email(params[:email])
     if @user and session[:user_id] == @user.id
       redirect_to :action => :test
     else
@@ -150,7 +150,7 @@ class UsersController < ApplicationController
         if @user and '["'<< @user.password<< '"]'.to_s == params[:password].to_s
 
           $uid = @user.id  #保存登陆的信息uid
-          session[:user_id] = @user.id
+          session[:user_id] = @user.object_id
           flash[:notice] = "User #{@user.username} was successfully login."
           format.html { redirect_to :action => :test, :notice => "User #{@user.username} was successfully login." }
           format.json { render :json => @user, :status => OK, :location => @user }
