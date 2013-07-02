@@ -57,17 +57,17 @@ class UsersController < ApplicationController
       @user = User.new(params[:user])
       respond_to do |format|
 
-        if @user.password == ''
+        if @user.password == ''   #判断密码是否为空
           flash[:notice] = 'The Password is blank'
           format.html { render :action => :signUp }
         else
-          if @user.password == @user.password_confirm
+          if @user.password == @user.password_confirm   #判断密码是否相同
             if @user.save
-              session[:user_id] = @user.id
+              session[:user_id] = @user.id  #保存session
               format.html { redirect_to :action => :test, :notice => 'User was successfully created.' }
               format.json { render :json => @user, :status => :created, :location => @user }
             else
-              flash[:notice] = 'The Email is not correct'
+              flash[:notice] = 'The Email or password is not correct'
               format.html { render :action => :signUp }
             end
           else
@@ -91,7 +91,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user
-        if @user.update_attributes(params[:user])
+        if @user.update_attributes(params[:user])   #更新实体属性的值，即修改密码
           format.html { redirect_to :action => :test, notice: 'User was successfully updated.' }
           format.json { head :no_content }
         else
