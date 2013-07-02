@@ -1,3 +1,6 @@
+
+<div class="signin">
+<%= image_tag 'http://kaikeba-photo.b0.upaiyun.com/home-slider/19.png', :class => 'index-image'%>
 <%= form_tag :action => 'redirect' do %>
 
     <% if flash[:notice] %>
@@ -5,19 +8,19 @@
     <% end %>
 
 
-    <label for="email">邮箱:</label>
-    <%= text_field_tag :email, params[:email], placeholder: '请输入您的邮箱', size: 45, maxlength: 20 %>
+    <%= text_field_tag :email, params[:email], placeholder: '邮箱', size: 45, maxlength: 20 %>
     <br>
 
-    <label for="password">密码:</label>
-    <%= password_field :password, params[:password], placeholder: '请输入您的密码', size: 45, maxlength: 20 %>
+    <%= password_field :password, params[:password], placeholder: '密码', size: 45, maxlength: 20 %>
     <br>
 
-    <%= check_box_tag 'remember_me' %><label for="remember_me">记住我</label>
+    <%= check_box_tag 'remember_me' %><label for="remember_me">自动登录</label>
     <%= link_to '忘记密码', :controller => 'users', :action => 'forgot_password' %>
     <br>
 
-    <%= submit_tag '登陆' %>
-
+  <div class="button glow button-rounded button-flat-caution">
+    <%= submit_tag '登陆'  %>
+   </div>
 <% end %>
 
+ </div>
