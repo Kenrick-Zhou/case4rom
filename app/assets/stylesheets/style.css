@@ -6,7 +6,7 @@
 
 .signin {
     line-height:3em;
-    margin:0 auto;
+    margin:30px 30px;
 }
 
 .button {
@@ -90,4 +90,5 @@
     height: 378px;
     width: 654px;
     float: left;
+    margin-right: 20px;
 }

@@ -8,6 +8,7 @@
     <% end %>
 
 
+      <label><p>欢迎登录</p></label>
     <%= text_field_tag :email, params[:email], placeholder: '邮箱', size: 45, maxlength: 20 %>
     <br>
 
@@ -16,11 +17,10 @@
 
     <%= check_box_tag 'remember_me' %><label for="remember_me">自动登录</label>
     <%= link_to '忘记密码', :controller => 'users', :action => 'forgot_password' %>
-    <br>
 
-  <div class="button glow button-rounded button-flat-caution">
-    <%= submit_tag '登陆'  %>
-   </div>
+
+    <%= submit_tag '登陆', :class=> 'btn btn-danger' %>
+
 <% end %>
 
  </div>
