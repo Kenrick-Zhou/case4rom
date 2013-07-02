@@ -1,47 +1,57 @@
 <%= form_for @user, :url => {:controller => 'users', :action => 'create'} do |f| %>
 
-    <% if @user.errors.any? %>
-        <div id="error_explanation">
-          <ul>
-            <% @user.errors.each do |msg| %>
-                <li><%= msg %></li>
-            <% end %>
-          </ul>
+    <div class="signUp">
+      <% if @user.errors.any? %>
+          <div id="error_explanation">
+            <ul>
+              <% @user.errors.each do |msg| %>
+                  <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
+
+      <% if flash[:notice] %>
+          <li>
+            <div class="notice"><%= flash[:notice] %></div>
+          </li>
+      <% end %>
+
+
+      <div class="signUpLeft">
+        <%= image_tag 'rails.png' %>
+      </div>
+
+      <div>
+
+        <p>欢迎注册</p>
+
+        <div>
+          <%= f.text_field :username, placeholder: '请输入您的用户名', size: 45, maxlength: 20 %>   <br>
         </div>
-    <% end %>
 
-    <% if flash[:notice] %>
-        <div class="notice"><%= flash[:notice] %></div>
-    <% end %>
+        <div>
+          <%= f.text_field :email, placeholder: '请输入您的邮箱', size: 45 %>   <br>
+        </div>
 
-    <fieldset>
+        <div>
+          <%= f.password_field :password, placeholder: '请输入您的密码', size: 45, maxlength: 20 %>  <br>
+        </div>
 
-      <legend>填写注册信息</legend>
+        <div>
+          <%= f.password_field :password_confirm, placeholder: '请重复输入密码', size: 45, maxlength: 20 %> <br>
+        </div>
 
-      <div>
-        <%= f.label :Email, '邮箱' %>:
-        <%= f.text_field :email %>   <br>
+        <%= check_box_tag 'agreement' %>
+        <label>我已阅读并同意</label><%= link_to '《用户注册协议》', :controller => 'users', :action => 'agreement' %>
+        <br><br>
+
+        <label>已有账号</label><%= link_to '去登陆', :controller => 'users', :action => 'login' %>
+                                                              <br>
+        <%= image_submit_tag('button_register_normal.png') %>
+
       </div>
-
-      <div>
-        <%= f.label :UserName, '用户名' %>:
-        <%= f.text_field :username %>   <br>
-      </div>
-
-      <div>
-        <%= f.label :Password, '密码' %>:
-        <%= f.password_field :password %>  <br>
-      </div>
-      <div>
-        <%= f.label :Password_confirm, '确认密码' %>:
-        <%= f.password_field :password_confirm %> <br>
-      </div>
-
-      <div class="actions">
-        <%= f.submit '注册' %>
-      </div>
-
-    </fieldset>
+    </div>
 <% end %>
 
 

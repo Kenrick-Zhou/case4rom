@@ -52,27 +52,34 @@ class UsersController < ApplicationController
   #end
   def create
 
-    @user = User.new(params[:user])
-    respond_to do |format|
+    if params[:agreement] == '1'    #判断是否同意协议
 
-      if @user.password == ''
-        flash[:notice] = 'The Password is blank'
-        format.html { render :action => :signUp }
-      else
-        if @user.password == @user.password_confirm
-          if @user.save
-            session[:user_id] = @user.id
-            format.html { redirect_to :action => :test, :notice => 'User was successfully created.' }
-            format.json { render :json => @user, :status => :created, :location => @user }
+      @user = User.new(params[:user])
+      respond_to do |format|
+
+        if @user.password == ''
+          flash[:notice] = 'The Password is blank'
+          format.html { render :action => :signUp }
+        else
+          if @user.password == @user.password_confirm
+            if @user.save
+              session[:user_id] = @user.id
+              format.html { redirect_to :action => :test, :notice => 'User was successfully created.' }
+              format.json { render :json => @user, :status => :created, :location => @user }
+            else
+              flash[:notice] = 'The Email is not correct'
+              format.html { render :action => :signUp }
+            end
           else
-            flash[:notice] = 'The Email is not correct'
+            flash[:notice] = 'The Password is not same'
             format.html { render :action => :signUp }
           end
-        else
-          flash[:notice] = 'The Password is not same'
-          format.html { render :action => :signUp }
         end
       end
+
+    else    #END 判断是否同意协议
+      flash[:notice] = 'please accept the agreement'
+      redirect_to :action => :signUp
     end
   end
 
@@ -149,7 +156,7 @@ class UsersController < ApplicationController
       respond_to do |format|
         if @user and '["'<< @user.password<< '"]'.to_s == params[:password].to_s
 
-          $uid = @user.id  #保存登陆的信息uid
+          $uid = @user.id #保存登陆的信息uid
           session[:user_id] = @user.object_id
           flash[:notice] = "User #{@user.username} was successfully login."
           format.html { redirect_to :action => :test, :notice => "User #{@user.username} was successfully login." }
@@ -164,12 +171,12 @@ class UsersController < ApplicationController
   end
 
   def signUp
-    if  params[:agreement] == '1'
-      @user = User.new
-    else
-      flash[:notice] = 'accept the agreement'
-      render :action => :agreement
-    end
+    @user = User.new
+    #if  params[:agreement] == '1'
+    #else
+    #  flash[:notice] = 'accept the agreement'
+    #  render :action => :agreement
+    #end
   end
 
   def agreement

@@ -12,4 +12,5 @@ class NewUser < ActiveRecord::Migration
 
   def down
   end
+
 end

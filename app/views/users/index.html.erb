@@ -33,6 +33,6 @@
 <% if user_logged_in? %>
     <%= link_to 'Logout', :controller => 'sessions', :action => 'destroy_session' %>
 <% else %>
-    <%= link_to '注册', :controller => 'users', :action => 'agreement' %>
+    <%= link_to '注册', :controller => 'users', :action => 'signUp' %>
     <%= link_to '登陆', :controller => 'users', :action => 'login' %>
 <% end %>
